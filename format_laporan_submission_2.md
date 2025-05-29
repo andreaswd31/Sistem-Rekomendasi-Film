@@ -373,8 +373,8 @@ Evaluasi model Collaborative Filtering berfokus pada akurasi prediksi rating num
 
     **Keterangan:**
     - $$n$$: jumlah total sampel (data prediksi)
-    - $$\hat{y}_i$$: rating film hasil prediksi model pada data ke-$i$
-    - $$y_i$$: rating aktual dari pengguna pada data ke-$i$
+    - $$\hat{y}_i$$: rating film hasil prediksi model pada data
+    - $$y_i$$: rating aktual dari pengguna 
     - $$\text{RMSE}$$: rata-rata akar dari kuadrat error prediksi terhadap nilai aktual
     
     **Interpretasi:**
