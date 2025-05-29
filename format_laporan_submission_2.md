@@ -53,15 +53,46 @@ Variabel-variabel pada ratings.csv :
 - rating: Merupakan rating yang diberikan pengguna untuk film, dalam skala 0.5 hingga 5.0. Tipe data: float64. Tidak ada nilai null.
 - timestamp: Merupakan waktu ketika rating diberikan, dalam format Unix epoch seconds. Tipe data: int64. Tidak ada nilai null.
 
+Tidak terdapat data duplikat maupun missing value pada dataset ini (Jumlah duplikasi: 0).
 ### Analisis Fitur Konten Content-Based Filtering (CBF)
 #### Fitur Genre Film
 - **Distribusi Frekuensi Genre**
 ![alt text](https://github.com/andreaswd31/Sistem-Rekomendasi-Film/blob/main/Top%2010%20Genre%20Paling%20Sering%20Muncul.png?raw=true)
-Data menunjukkan bahwa 'Drama' dan 'Comedy' adalah genre yang paling dominan, diikuti oleh 'Thriller' dan 'Action'. Ini mengindikasikan bahwa sebagian besar koleksi film dalam dataset MovieLens Small terfokus pada genre-genre populer ini. Hal ini penting untuk Content-Based Filtering, karena film-film yang direkomendasikan kemungkinan besar akan cenderung ke genre-genre yang dominan ini, mencerminkan komposisi dataset itu sendiri.
+
+Top 10 Genre Paling Sering Muncul:
+
+    | No. | Genre      | Number of Movies |
+    |-----|------------|------------------|
+    | 1   | Drama        | 4361             |
+    | 1   | Comedy     | 3756             |
+    | 2   | Thriller   | 1894             |
+    | 3   | Action     | 1828             |
+    | 4   | Romance    | 1596             |
+    | 5   | Adventure  | 1263             |
+    | 6   | Crime      | 1199             |
+    | 7   | Sci-Fi     | 980              |
+    | 8   | Horror     | 978              |
+    | 9   | Fantasy    | 779              |
+
+    Data menunjukkan bahwa 'Drama' dan 'Comedy' adalah genre yang paling dominan, diikuti oleh 'Thriller' dan 'Action'. Ini mengindikasikan bahwa sebagian besar koleksi film dalam dataset MovieLens Small terfokus pada genre-genre populer ini. Hal ini penting untuk Content-Based Filtering, karena film-film yang direkomendasikan kemungkinan besar akan cenderung ke genre-genre yang dominan ini, mencerminkan komposisi dataset itu sendiri.
 
 - **Rata-rata Jumlah Genre per Film**
-![alt text](https://github.com/andreaswd31/Sistem-Rekomendasi-Film/blob/main/Distribusi%20Jumlah%20Genre%20per%20Film.png?raw=true)
-Distribusi ini menunjukkan bahwa mayoritas film memiliki 1, 2, atau 3 genre. Hanya sedikit film yang memiliki 4 genre atau lebih. Ini berarti representasi TF-IDF untuk sebagian besar film tidak akan terlalu "padat" (banyak fitur), dan kemiripan akan lebih mudah dihitung karena jumlah genre per film tidak terlalu bervariasi secara ekstrem.
+![alt text](https://github.com/andreaswd31/Sistem-Rekomendasi-Film/blob/main/Distribusi%20Jumlah%20Genre%20per%20Film.png?raw=true) 
+Distribusi Jumlah Genre per Film:
+
+    | Jumlah Genre | Jumlah Film |
+    |-------------|------------|
+    | 1           | 2851       |
+    | 2           | 3218       |
+    | 3           | 2338       |
+    | 4           | 987        |
+    | 5           | 271        |
+    | 6           | 63         |
+    | 7           | 12         |
+    | 8           | 1          |
+    | 10          | 1          |
+
+    Distribusi ini menunjukkan bahwa mayoritas film memiliki 1, 2, atau 3 genre. Hanya sedikit film yang memiliki 4 genre atau lebih. Ini berarti representasi TF-IDF untuk sebagian besar film tidak akan terlalu "padat" (banyak fitur), dan kemiripan akan lebih mudah dihitung karena jumlah genre per film tidak terlalu bervariasi secara ekstrem.
 
 ### Analisis Fitur Konten Colaborative Filtering (CF)
 #### Kelangkaan Data (Sparsity)
@@ -82,11 +113,36 @@ Mayoritas rating terkonsentrasi pada nilai 3.0, 4.0, dan 5.0, dengan rating 4.0 
 
 * **Distribusi jumlah rating per pengguna**
 ![alt text](https://github.com/andreaswd31/Sistem-Rekomendasi-Film/blob/main/Distribusi%20Jumlah%20Rating%20per%20Pengguna.png?raw=true)
-Terdapat variasi signifikan dalam aktivitas pengguna, dengan rentang rating dari minimal 20 hingga maksimum 2698. Hal ini menunjukkan keberadaan "pengguna super aktif" (power users) yang memberikan banyak rating, serta mayoritas pengguna yang lebih pasif. Model perlu mampu menangani spektrum aktivitas ini.
+Statistik Jumlah Rating per Pengguna:
+    | Statistik | Nilai        |
+    |-----------|-------------|
+    | Count     | 610         |
+    | Mean      | 165.304918  |
+    | Std Dev   | 269.480584  |
+    | Min       | 20.000000   |
+    | 25%       | 35.000000   |
+    | 50%       | 70.500000   |
+    | 75%       | 168.000000  |
+    | Max       | 2698.000000 |
+
+    Terdapat variasi signifikan dalam aktivitas pengguna, dengan rentang rating dari minimal 20 hingga maksimum 2698. Hal ini menunjukkan keberadaan "pengguna super aktif" (power users) yang memberikan banyak rating, serta mayoritas pengguna yang lebih pasif. Model perlu mampu menangani spektrum aktivitas ini.
 
 * **Distribusi jumlah rating per film**
 ![alt text](https://github.com/andreaswd31/Sistem-Rekomendasi-Film/blob/main/Distribusi%20jumlah%20rating%20per%20film.png?raw=true)
-Mirip dengan pengguna, ada film yang sangat populer (menerima ratusan rating) dan banyak film yang hanya menerima sedikit rating (minimal 1 rating). Film dengan sedikit data mungkin menjadi tantangan dalam hal prediksi yang akurat (masalah cold start untuk item), sementara film populer memiliki data yang kaya.
+
+    Statistik Jumlah Rating per Film:
+    | Statistik | Nilai        |
+    |-----------|-------------|
+    | Count     | 9724        |
+    | Mean      | 10.369807   |
+    | Std Dev   | 22.401005   |
+    | Min       | 1.000000    |
+    | 25%       | 1.000000    |
+    | 50%       | 3.000000    |
+    | 75%       | 9.000000    |
+    | Max       | 329.000000  |
+
+    Mirip dengan pengguna, ada film yang sangat populer (menerima ratusan rating) dan banyak film yang hanya menerima sedikit rating (minimal 1 rating). Film dengan sedikit data mungkin menjadi tantangan dalam hal prediksi yang akurat (masalah cold start untuk item), sementara film populer memiliki data yang kaya.
 
 * **Top 10 Film dan Pengguna**
 ![alt text](https://github.com/andreaswd31/Sistem-Rekomendasi-Film/blob/main/Top%2010%20Film%20dengan%20Jumlah%20Rating%20Terbanyak.png?raw=true)
@@ -121,11 +177,7 @@ TF-IDF (Term Frequency-Inverse Document Frequency) Vectorizer untuk mengubah des
     Model berbasis kemiripan tidak dapat bekerja langsung dengan teks mentah. TF-IDF adalah teknik yang efektif untuk mengubah data tekstual (genre) menjadi representasi numerik yang padat, di mana setiap film diwakili oleh sebuah vektor. Bobot TF-IDF secara cerdas menangkap pentingnya suatu genre bagi sebuah film dalam konteks seluruh dataset, bukan hanya frekuensi kemunculannya.   
     
 * **Penghitungan Kemiripan Konten (Cosine Similarity)**
-cosine similarity untuk mengukur kemiripan antar item (film) berdasarkan fitur kontennya (misalnya genre yang sudah diolah menjadi TF-IDF). Rumus Cosine Similarity:
-$$\text{similarity} = \frac{A \cdot B}{||A|| \times ||B||}$$
-    - **𝐴⃗ ⋅ 𝐵⃗** adalah dot product dari dua vektor.
-    - **∥𝐴⃗∥** dan **∥𝐵⃗∥** adalah norma (magnitudo) dari masing-masing vektor.
-
+cosine similarity untuk mengukur kemiripan antar item (film) berdasarkan fitur kontennya (misalnya genre yang sudah diolah menjadi TF-IDF). 
     ```python
     cosine_sim = cosine_similarity(tfidf_matrix, tfidf_matrix)
     cosine_sim_df = pd.DataFrame(cosine_sim, index=movies['title'].values, columns=movies['title'].values)
