@@ -56,6 +56,8 @@ Variabel-variabel pada ratings.csv :
 Tidak terdapat data duplikat maupun missing value pada dataset ini (Jumlah duplikasi: 0).
 ### Analisis Fitur Konten Content-Based Filtering (CBF)
 #### Fitur Genre Film
+Terdapat 20 genre Unik yang menunjukkan keragaman genre dalam dataset, yang menjadi dasar bagi model Content-Based Filtering.
+
 - **Distribusi Frekuensi Genre**
 ![alt text](https://github.com/andreaswd31/Sistem-Rekomendasi-Film/blob/main/Top%2010%20Genre%20Paling%20Sering%20Muncul.png?raw=true)
 Top 10 Genre Paling Sering Muncul:
