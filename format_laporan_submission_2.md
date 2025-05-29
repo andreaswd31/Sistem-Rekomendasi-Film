@@ -58,7 +58,6 @@ Tidak terdapat data duplikat maupun missing value pada dataset ini (Jumlah dupli
 #### Fitur Genre Film
 - **Distribusi Frekuensi Genre**
 ![alt text](https://github.com/andreaswd31/Sistem-Rekomendasi-Film/blob/main/Top%2010%20Genre%20Paling%20Sering%20Muncul.png?raw=true)
-
 Top 10 Genre Paling Sering Muncul:
 
     | No. | Genre      | Number of Movies |
@@ -74,11 +73,14 @@ Top 10 Genre Paling Sering Muncul:
     | 8   | Horror     | 978              |
     | 9   | Fantasy    | 779              |
 
-    Data menunjukkan bahwa 'Drama' dan 'Comedy' adalah genre yang paling dominan, diikuti oleh 'Thriller' dan 'Action'. Ini mengindikasikan bahwa sebagian besar koleksi film dalam dataset MovieLens Small terfokus pada genre-genre populer ini. Hal ini penting untuk Content-Based Filtering, karena film-film yang direkomendasikan kemungkinan besar akan cenderung ke genre-genre yang dominan ini, mencerminkan komposisi dataset itu sendiri.
+
+Data menunjukkan bahwa 'Drama' dan 'Comedy' adalah genre yang paling dominan, diikuti oleh 'Thriller' dan 'Action'. Ini mengindikasikan bahwa sebagian besar koleksi film dalam dataset MovieLens Small terfokus pada genre-genre populer ini. Hal ini penting untuk Content-Based Filtering, karena film-film yang direkomendasikan kemungkinan besar akan cenderung ke genre-genre yang dominan ini, mencerminkan komposisi dataset itu sendiri.
+
 
 - **Rata-rata Jumlah Genre per Film**
-![alt text](https://github.com/andreaswd31/Sistem-Rekomendasi-Film/blob/main/Distribusi%20Jumlah%20Genre%20per%20Film.png?raw=true) 
-Distribusi Jumlah Genre per Film:
+
+    ![alt text](https://github.com/andreaswd31/Sistem-Rekomendasi-Film/blob/main/Distribusi%20Jumlah%20Genre%20per%20Film.png?raw=true) 
+    Distribusi Jumlah Genre per Film:
 
     | Jumlah Genre | Jumlah Film |
     |-------------|------------|
@@ -108,12 +110,14 @@ Tingkat sparsity yang sangat tinggi (98.30%) menegaskan bahwa dataset interaksi 
 
 #### Pola Interaksi Rating, Film dan, Pengguna
 * **Distribusi Rating Film**
-![alt text](https://github.com/andreaswd31/Sistem-Rekomendasi-Film/blob/main/Distribusi%20Rating%20Film1.png?raw=true)
-Mayoritas rating terkonsentrasi pada nilai 3.0, 4.0, dan 5.0, dengan rating 4.0 menjadi yang paling dominan. Rating di bawah 2.5 memiliki frekuensi yang jauh lebih rendah. Hal ini mengindikasikan bahwa pengguna cenderung memberikan rating yang cukup tinggi, menunjukkan preferensi umum terhadap film-film yang dinilai baik.
+    ![alt text](https://github.com/andreaswd31/Sistem-Rekomendasi-Film/blob/main/Distribusi%20Rating%20Film1.png?raw=true)
+    Mayoritas rating terkonsentrasi pada nilai 3.0, 4.0, dan 5.0, dengan rating 4.0 menjadi yang paling dominan. Rating di bawah 2.5 memiliki frekuensi yang jauh lebih rendah. Hal ini mengindikasikan bahwa pengguna cenderung memberikan rating yang cukup tinggi, menunjukkan preferensi umum terhadap film-film yang dinilai baik.
 
 * **Distribusi jumlah rating per pengguna**
-![alt text](https://github.com/andreaswd31/Sistem-Rekomendasi-Film/blob/main/Distribusi%20Jumlah%20Rating%20per%20Pengguna.png?raw=true)
-Statistik Jumlah Rating per Pengguna:
+
+    ![alt text](https://github.com/andreaswd31/Sistem-Rekomendasi-Film/blob/main/Distribusi%20Jumlah%20Rating%20per%20Pengguna.png?raw=true)
+
+    Statistik Jumlah Rating per Pengguna:
     | Statistik | Nilai        |
     |-----------|-------------|
     | Count     | 610         |
@@ -128,7 +132,8 @@ Statistik Jumlah Rating per Pengguna:
     Terdapat variasi signifikan dalam aktivitas pengguna, dengan rentang rating dari minimal 20 hingga maksimum 2698. Hal ini menunjukkan keberadaan "pengguna super aktif" (power users) yang memberikan banyak rating, serta mayoritas pengguna yang lebih pasif. Model perlu mampu menangani spektrum aktivitas ini.
 
 * **Distribusi jumlah rating per film**
-![alt text](https://github.com/andreaswd31/Sistem-Rekomendasi-Film/blob/main/Distribusi%20jumlah%20rating%20per%20film.png?raw=true)
+
+    ![alt text](https://github.com/andreaswd31/Sistem-Rekomendasi-Film/blob/main/Distribusi%20jumlah%20rating%20per%20film.png?raw=true)
 
     Statistik Jumlah Rating per Film:
     | Statistik | Nilai        |
@@ -145,12 +150,14 @@ Statistik Jumlah Rating per Pengguna:
     Mirip dengan pengguna, ada film yang sangat populer (menerima ratusan rating) dan banyak film yang hanya menerima sedikit rating (minimal 1 rating). Film dengan sedikit data mungkin menjadi tantangan dalam hal prediksi yang akurat (masalah cold start untuk item), sementara film populer memiliki data yang kaya.
 
 * **Top 10 Film dan Pengguna**
-![alt text](https://github.com/andreaswd31/Sistem-Rekomendasi-Film/blob/main/Top%2010%20Film%20dengan%20Jumlah%20Rating%20Terbanyak.png?raw=true)
-Film-film seperti 'Forrest Gump', 'Shawshank Redemption', dan 'Pulp Fiction' mendominasi dengan jumlah rating terbanyak. Ini umumnya adalah film-film populer yang dikenal luas, menunjukkan bahwa dataset mencerminkan pola popularitas film di dunia nyata.
+
+    ![alt text](https://github.com/andreaswd31/Sistem-Rekomendasi-Film/blob/main/Top%2010%20Film%20dengan%20Jumlah%20Rating%20Terbanyak.png?raw=true)
+    Film-film seperti 'Forrest Gump', 'Shawshank Redemption', dan 'Pulp Fiction' mendominasi dengan jumlah rating terbanyak. Ini umumnya adalah film-film populer yang dikenal luas, menunjukkan bahwa dataset mencerminkan pola popularitas film di dunia nyata.
 
 * **Top 10 Pengguna dengan Jumlah Rating Terbanyak**
-![alt text](https://github.com/andreaswd31/Sistem-Rekomendasi-Film/blob/main/Top%2010%20Pengguna%20dengan%20Jumlah%20Rating%20Terbanyak.png?raw=true)
-Grafik ini secara visual mengkonfirmasi keberadaan "power users" seperti Pengguna 414 dan Pengguna 599 yang telah memberikan ribuan rating. Kelompok pengguna ini merupakan sumber data interaksi yang sangat kaya dan berkontribusi signifikan terhadap volume data dalam dataset.
+
+    ![alt text](https://github.com/andreaswd31/Sistem-Rekomendasi-Film/blob/main/Top%2010%20Pengguna%20dengan%20Jumlah%20Rating%20Terbanyak.png?raw=true)
+    Grafik ini secara visual mengkonfirmasi keberadaan "power users" seperti Pengguna 414 dan Pengguna 599 yang telah memberikan ribuan rating. Kelompok pengguna ini merupakan sumber data interaksi yang sangat kaya dan berkontribusi signifikan terhadap volume data dalam dataset.
 
 ## Data Preparation
 Pada bagian ini, data mentah yang telah dipahami melalui EDA akan diubah dan diformat sedemikian rupa agar siap untuk diolah oleh kedua pendekatan sistem rekomendasi: Collaborative Filtering dan Content-Based Filtering. Tujuan utama dari tahapan ini adalah untuk memastikan data dalam format yang optimal untuk pelatihan model dan untuk meningkatkan efisiensi komputasi.
