@@ -79,7 +79,8 @@ Data menunjukkan bahwa 'Drama' dan 'Comedy' adalah genre yang paling dominan, di
 
 - **Rata-rata Jumlah Genre per Film**
 
-    ![alt text](https://github.com/andreaswd31/Sistem-Rekomendasi-Film/blob/main/Distribusi%20Jumlah%20Genre%20per%20Film.png?raw=true) 
+    ![alt text](https://github.com/andreaswd31/Sistem-Rekomendasi-Film/blob/main/Distribusi%20Jumlah%20Genre%20per%20Film.png?raw=true)
+  
     Distribusi Jumlah Genre per Film:
 
     | Jumlah Genre | Jumlah Film |
@@ -110,7 +111,9 @@ Tingkat sparsity yang sangat tinggi (98.30%) menegaskan bahwa dataset interaksi 
 
 #### Pola Interaksi Rating, Film dan, Pengguna
 * **Distribusi Rating Film**
+
     ![alt text](https://github.com/andreaswd31/Sistem-Rekomendasi-Film/blob/main/Distribusi%20Rating%20Film1.png?raw=true)
+  
     Mayoritas rating terkonsentrasi pada nilai 3.0, 4.0, dan 5.0, dengan rating 4.0 menjadi yang paling dominan. Rating di bawah 2.5 memiliki frekuensi yang jauh lebih rendah. Hal ini mengindikasikan bahwa pengguna cenderung memberikan rating yang cukup tinggi, menunjukkan preferensi umum terhadap film-film yang dinilai baik.
 
 * **Distribusi jumlah rating per pengguna**
@@ -169,6 +172,7 @@ Untuk pendekatan Content-Based Filtering, berfokus pada informasi deskriptif fil
     movies['genres'] = movies['genres'].fillna('')
     ```
     Berikut adalah daftar genre yang terdapat dalam dataset:
+  
     ![alt text](https://github.com/andreaswd31/Sistem-Rekomendasi-Film/blob/main/Screenshot%202025-05-28%20235826.png?raw=true)
     
     Kolom genres yang berisi string dengan genre dipisahkan oleh tanda pipa (|) adalah fitur utama untuk Content-Based Filtering. Memastikan tidak ada nilai kosong (NaN) sangat penting agar proses vektorisasi tekstual tidak terganggu dan setiap film memiliki representasi genre yang valid.
@@ -380,9 +384,12 @@ Evaluasi model Collaborative Filtering berfokus pada akurasi prediksi rating num
 - **Hasil Proyek Berdasarkan Metrik Evaluasi**
 Model Collaborative Filtering dilatih selama 20 epoch, dan kinerja dipantau menggunakan loss (Mean Squared Error) dan RMSE pada training dan validation set.
     - Visualisasi Hasil Pelatihan:
-    Plot Loss 
+    Plot Loss
+
     ![alt text](https://github.com/andreaswd31/Sistem-Rekomendasi-Film/blob/main/Training%20and%20Validation%20Loss.png?raw=true)
+  
     Plot RMSE
+
     ![alt text](https://github.com/andreaswd31/Sistem-Rekomendasi-Film/blob/main/Training%20and%20Validation%20RMSE.png?raw=true)
     - Nilai RMSE Akhir:
     Final Training RMSE: 0.9230
@@ -396,7 +403,9 @@ Untuk lebih lanjut mengevaluasi kemampuan model dalam menghasilkan rekomendasi y
     Dipilih satu pengguna dari data validasi (`X_val`) untuk dijadikan subjek uji. Misalnya Pengguna ID Asli: 489 (Encoded ID: 488)
     - Menampilkan Film yang Sudah Ditonton
     Ditampilkan daftar film yang sebelumnya sudah diberi rating oleh pengguna tersebut untuk mengetahui preferensi awalnya. Contoh:
+
     ![alt text](https://github.com/andreaswd31/Sistem-Rekomendasi-Film/blob/main/Beberapa%20film%20yang%20sudah%20ditonton.png?raw=true)
+  
     - Menentukan Film yang Belum Ditonton
     Dengan menyaring semua film yang tidak terdapat dalam daftar rating pengguna, diperoleh daftar film yang **belum ditonton**. Jumlahnya:  9076
     - Prediksi Rating untuk Film yang Belum Ditonton
