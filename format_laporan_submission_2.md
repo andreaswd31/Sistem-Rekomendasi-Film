@@ -388,46 +388,46 @@ Model Collaborative Filtering dilatih selama 20 epoch, dan kinerja dipantau meng
     - Visualisasi Hasil Pelatihan:
     Plot Loss
 
-    ![alt text](https://github.com/andreaswd31/Sistem-Rekomendasi-Film/blob/main/Training%20and%20Validation%20Loss.png?raw=true)
+    ![alt text](https://github.com/andreaswd31/Sistem-Rekomendasi-Film/blob/main/set11.png?raw=true)
   
     Plot RMSE
 
-    ![alt text](https://github.com/andreaswd31/Sistem-Rekomendasi-Film/blob/main/Training%20and%20Validation%20RMSE.png?raw=true)
+    ![alt text](https://github.com/andreaswd31/Sistem-Rekomendasi-Film/blob/main/sett333.png?raw=true)
     - Nilai RMSE Akhir:
-    Final Training RMSE: 0.9230
-    Final Validation RMSE: 0.9818
+    Final Training RMSE: 0.9324
+    Final Validation RMSE: 0.9894
     - Analisis Hasil
     Dari plot dan nilai RMSE akhir, terlihat bahwa model Collaborative Filtering berhasil mengkonvergen selama pelatihan. Training Loss dan Validation Loss menurun tajam pada epoch awal dan kemudian stabil, dengan gap yang minim, menunjukkan bahwa model tidak mengalami overfitting yang signifikan. Nilai Validation RMSE mencapai sekitar 0.9818. Mengingat rentang rating asli (0.5 hingga 5.0), nilai RMSE ini mengindikasikan bahwa rata-rata kesalahan prediksi model adalah sekitar 0.98 poin rating. Akurasi ini menunjukkan model mampu memprediksi rating dengan cukup baik, yang secara langsung menjawab Problem Statement 1 tentang presisi prediksi rating.
 
 * Hasil Proyek Berdasarkan Metrik Evaluasi (Uji Tes Rekomendasi)
-Untuk lebih lanjut mengevaluasi kemampuan model dalam menghasilkan rekomendasi yang dipersonalisasi, uji tes dilakukan dengan memilih Pengguna ID 489 dan menghasilkan 10 rekomendasi film teratas berdasarkan prediksi rating.
+Untuk lebih lanjut mengevaluasi kemampuan model dalam menghasilkan rekomendasi yang dipersonalisasi, uji tes dilakukan dengan memilih Pengguna ID 387 dan menghasilkan 10 rekomendasi film teratas berdasarkan prediksi rating.
     - Memilih Pengguna Uji 
-    Dipilih satu pengguna dari data validasi (`X_val`) untuk dijadikan subjek uji. Misalnya Pengguna ID Asli: 489 (Encoded ID: 488)
+    Dipilih satu pengguna dari data validasi (`X_val`) untuk dijadikan subjek uji. Misalnya Pengguna ID Asli: 387 (Encoded ID: 386)
     - Menampilkan Film yang Sudah Ditonton
     Ditampilkan daftar film yang sebelumnya sudah diberi rating oleh pengguna tersebut untuk mengetahui preferensi awalnya. Contoh:
 
-    ![alt text](https://github.com/andreaswd31/Sistem-Rekomendasi-Film/blob/main/Beberapa%20film%20yang%20sudah%20ditonton.png?raw=true)
+    ![alt text](https://github.com/andreaswd31/Sistem-Rekomendasi-Film/blob/main/Screenshot%202025-05-29%20150955.png?raw=true)
   
     - Menentukan Film yang Belum Ditonton
-    Dengan menyaring semua film yang tidak terdapat dalam daftar rating pengguna, diperoleh daftar film yang **belum ditonton**. Jumlahnya:  9076
+    Dengan menyaring semua film yang tidak terdapat dalam daftar rating pengguna, diperoleh daftar film yang **belum ditonton**. Jumlahnya:  8697
     - Prediksi Rating untuk Film yang Belum Ditonton
     Menggunakan model yang telah dilatih, dilakukan prediksi terhadap seluruh film yang belum ditonton oleh pengguna tersebut.
 
         | movieId | predicted_rating |
         |---------|------------------|
-        | 1       | 3.85             |
-        | 3       | 3.16             |
-        | 6       | 3.96             |
-        | 50      | 4.25             |
-        | 101     | 3.90             |
+        | 1       | 4.196772            |
+        | 3       | 3.552000             |
+        | 6       | 4.384105             |
+        | 50      | 4.333724             |
+        | 101     | 3.952281             |
 
     - Menampilkan Rekomendasi Teratas
     Film dengan prediksi rating tertinggi kemudian diurutkan dan ditampilkan sebagai rekomendasi utama.
-    **Top 10 Rekomendasi Film untuk Pengguna 489:**
-      ![alt text](https://github.com/andreaswd31/Sistem-Rekomendasi-Film/blob/main/Rekomendasi%20Film%20untuk%20Pengguna.png?raw=true)
+    **Top 10 Rekomendasi Film untuk Pengguna 387:**
+      ![alt text](https://github.com/andreaswd31/Sistem-Rekomendasi-Film/blob/main/baru.png?raw=true)
       
     - Analisis Hasil Uji Tes Rekomendasi
-    Model Collaborative Filtering berhasil menghasilkan 10 rekomendasi film teratas untuk Pengguna ID 489. Prediksi rating berkisar antara 4.96 hingga 5.31. Beberapa film rekomendasi bahkan menunjukkan prediksi rating sedikit di atas skala 5.0 (misalnya, Shawshank Redemption dengan prediksi 5.31), yang menunjukkan kemampuan model untuk mengekstrapolasi preferensi kuat, meskipun dalam implementasi akhir nilai ini dapat dibatasi ke 5.0 (clipping). Perbandingan dengan film-film yang sebelumnya diberi rating 5.0 oleh Pengguna 489 (seperti Black Swan (Drama|Thriller), Kill Bill (Action|Drama|Thriller), Sea Inside (Drama)) menunjukkan bahwa rekomendasi CF mencakup berbagai genre seperti Crime|Drama, Action|Drama|Thriller, Comedy, dan Documentary. Ini mengindikasikan bahwa model CF mampu merekomendasikan film berdasarkan pola preferensi pengguna lain yang serupa, tidak hanya terpaku pada genre yang sama persis, sehingga dapat memberikan discovery yang lebih beragam. Ini secara langsung menjawab Problem Statement 2 tentang kemampuan sistem untuk menyajikan rekomendasi personal.
+    Model Collaborative Filtering berhasil menghasilkan 10 rekomendasi film teratas untuk Pengguna ID 387. Prediksi rating berkisar antara 3.55 hingga 3.33. Beberapa film rekomendasi bahkan menunjukkan prediksi rating sedikit di atas skala 5.0 (misalnya, High noon dengan prediksi 5.91), yang menunjukkan kemampuan model untuk mengekstrapolasi preferensi kuat, meskipun dalam implementasi akhir nilai ini dapat dibatasi ke 5.0 (clipping). Perbandingan dengan film-film yang sebelumnya diberi rating 5.0 oleh Pengguna 387 (seperti Black Swan (Drama|Thriller), Kill Bill (Action|Drama|Thriller), Sea Inside (Drama)) menunjukkan bahwa rekomendasi CF mencakup berbagai genre seperti Crime|Drama, Action|Drama|Thriller, Comedy, dan Documentary. Ini mengindikasikan bahwa model CF mampu merekomendasikan film berdasarkan pola preferensi pengguna lain yang serupa, tidak hanya terpaku pada genre yang sama persis, sehingga dapat memberikan discovery yang lebih beragam. Ini secara langsung menjawab Problem Statement 2 tentang kemampuan sistem untuk menyajikan rekomendasi personal.
 
 ### Kesimpulan Evaluasi Menjawab Business Understanding
 Evaluasi ini didasarkan pada hasil implementasi kedua pendekatan sistem rekomendasi: Content-Based Filtering (CBF) dan Collaborative Filtering (CF). Diperoleh sejumlah temuan yang merefleksikan keterkaitan langsung antara performa model dengan problem statements serta sejauh mana capaian terhadap tujuan yang telah ditetapkan dalam Business Understanding.
