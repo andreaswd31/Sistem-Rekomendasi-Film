@@ -275,6 +275,10 @@ Fungsi ini adalah inti operasional dari Content-Based Filtering. Ia memungkinkan
     * Kualitas rekomendasi sangat bergantung pada kelengkapan dan kualitas metadata item. Jika metadata kurang atau tidak akurat, rekomendasi bisa menjadi buruk.
     * Model ini kesulitan merekomendasikan kepada pengguna baru yang belum memiliki riwayat preferensi yang cukup untuk membangun profil konten mereka.
 
+- **Output Top-10 Rekomendasi Film Content-Based Filtering**
+    ![alt text](https://github.com/andreaswd31/Sistem-Rekomendasi-Film/blob/main/Uji%20Tes%20Rekomendasi%20Content-Based%20Filtering.png?raw=true)
+    Hasil uji coba menunjukkan bahwa model Content-Based Filtering berhasil merekomendasikan film-film yang memiliki kemiripan konten sangat tinggi, dengan similarity score sebesar 1.00. Semua film yang direkomendasikan memiliki genre Drama|Thriller yang identik dengan film referensi 'Girl with the Dragon Tattoo, The (2011)'. Ini memvalidasi bahwa sistem secara efektif dapat merekomendasikan film berdasarkan atribut konten eksplisit, secara langsung menjawab Problem Statement 3 tentang relevansi rekomendasi berbasis konten.
+
 ### Pendekatan Collaborative Filtering (CF)
 Pendekatan Collaborative Filtering, khususnya dengan Matrix Factorization berbasis embedding, memprediksi rating film berdasarkan pola interaksi kolektif pengguna. Model ini memprediksi rating antara pengguna dan item (film) berdasarkan dot product dari vektor embedding pengguna dan item, ditambah dengan bias pengguna dan item.
 **Rumus Prediksi Rating:**
@@ -314,7 +318,7 @@ RecommenderNet adalah model rekomendasi berbasis collaborative filtering yang me
     * metrics=RootMeanSquaredError(): Digunakan untuk mengukur rata-rata kesalahan prediksi, agar mudah diinterpretasikan dalam skala rating.
 
 * **Training Model RecommenderNet**
-    Model dilatih menggunakan data input berupa pasangan ID pengguna dan ID film (X_train) serta target rating aktual (y_train). Proses pelatihan dilakukan selama 20 epoch, di mana pada setiap epoch, model mencoba meminimalkan loss (Mean Squared Error) antara prediksi dan rating sebenarnya. Data validasi (X_val, y_val) digunakan untuk memantau performa model di data yang tidak dilatih, membantu mendeteksi overfitting sejak dini. Parameter verbose=1 digunakan untuk menampilkan progres pelatihan secara rinci. Model berhasil dilatih selama 20 epoch, dengan perbaikan bertahap pada nilai loss dan root mean squared error (RMSE) di data pelatihan maupun validasi. Pada epoch awal, RMSE validasi masih tinggi (sekitar 1.05), namun seiring pelatihan, nilai tersebut terus menurun, mencapai sekitar 0.95–0.96 di akhir pelatihan. Hal ini menunjukkan bahwa model mulai mampu memberikan prediksi rating yang mendekati nilai sebenarnya, meskipun fluktuasi ringan tetap terlihat, yang wajar dalam proses pembelajaran model rekomendasi berbasis embedding.
+    Model dilatih menggunakan data input berupa pasangan ID pengguna dan ID film (X_train) serta target rating aktual (y_train). Proses pelatihan dilakukan selama 20 epoch, di mana pada setiap epoch, model mencoba meminimalkan loss (Mean Squared Error) antara prediksi dan rating sebenarnya. Data validasi (X_val, y_val) digunakan untuk memantau performa model di data yang tidak dilatih, membantu mendeteksi overfitting sejak dini. Parameter verbose=1 digunakan untuk menampilkan progres pelatihan secara rinci. Model berhasil dilatih selama 20 epoch, dengan perbaikan bertahap pada nilai loss dan root mean squared error (RMSE) di data pelatihan maupun validasi. Pada epoch awal, RMSE validasi masih tinggi (sekitar 7.80), namun seiring pelatihan, nilai tersebut terus menurun, mencapai sekitar 0.82 - 0,87 di akhir pelatihan. Hal ini menunjukkan bahwa model mulai mampu memberikan prediksi rating yang mendekati nilai sebenarnya, meskipun fluktuasi ringan tetap terlihat, yang wajar dalam proses pembelajaran model rekomendasi berbasis embedding.
     Penggunaan optimizer Adam dan loss function MSE merupakan pilihan standar dan efektif untuk melatih model regresi berbasis neural network. Pemantauan RMSE memungkinkan evaluasi yang intuitif terhadap akurasi prediksi. Proses pelatihan memungkinkan model untuk belajar pola interaksi dari data dan menyesuaikan bobotnya agar dapat memprediksi rating secara akurat.
 
 **Kelebihan dan Kekurangan Pendekatan Collaborative Filtering**
@@ -326,6 +330,36 @@ RecommenderNet adalah model rekomendasi berbasis collaborative filtering yang me
     * Masalah Cold Start (Pengguna & Item Baru): Model kesulitan merekomendasikan film baru yang belum memiliki rating atau untuk pengguna baru yang belum memberikan rating yang cukup, karena tidak ada data interaksi yang cukup untuk mempelajari embedding mereka
     * Sparsity: Meskipun diatasi sebagian oleh embedding, data yang sangat jarang masih menjadi tantangan bagi CF. Kualitas rekomendasi mungkin berkurang untuk pengguna atau item dengan sedikit interaksi.
     * Skalabilitas: Meskipun Matrix Factorization lebih baik dari User-Based tradisional, membangun model yang sangat besar untuk jutaan pengguna/item masih memerlukan sumber daya komputasi yang signifikan.
+    
+* Hasil Proyek Berdasarkan Metrik Evaluasi (Uji Tes Rekomendasi)
+Untuk lebih lanjut mengevaluasi kemampuan model dalam menghasilkan rekomendasi yang dipersonalisasi, uji tes dilakukan dengan memilih Pengguna ID 525 dan menghasilkan 10 rekomendasi film teratas berdasarkan prediksi rating.
+    - Memilih Pengguna Uji 
+    Dipilih satu pengguna dari data validasi (`X_val`) untuk dijadikan subjek uji. Misalnya Pengguna ID Asli: 525  (Encoded ID: 524)
+    - Menampilkan Film yang Sudah Ditonton
+    Ditampilkan daftar film yang sebelumnya sudah diberi rating oleh pengguna tersebut untuk mengetahui preferensi awalnya. Contoh:
+
+    ![alt text](https://github.com/andreaswd31/Sistem-Rekomendasi-Film/blob/main/model11.png?raw=true)
+  
+    - Menentukan Film yang Belum Ditonton
+    Dengan menyaring semua film yang tidak terdapat dalam daftar rating pengguna, diperoleh daftar film yang **belum ditonton**. Jumlahnya:  9224
+    - Prediksi Rating untuk Film yang Belum Ditonton
+    Menggunakan model yang telah dilatih, dilakukan prediksi terhadap seluruh film yang belum ditonton oleh pengguna tersebut.
+
+        | movieId | predicted_rating |
+        |---------|------------------|
+        | 3       |  2.428719            |
+        | 6       | 3.238611             |
+        | 70       |  2.828757            |
+        | 101      | 3.202521             |
+        | 110     | 3.334437             |
+
+    - Output Top-10 Rekomendasi Film Collaborative Filtering
+    Film dengan prediksi rating tertinggi kemudian diurutkan dan ditampilkan sebagai rekomendasi utama.
+    **Top 10 Rekomendasi Film untuk Pengguna 525:**
+      ![alt text](https://github.com/andreaswd31/Sistem-Rekomendasi-Film/blob/main/Screenshot%202025-05-30%20141910.png?raw=true)
+      
+    - Analisis Hasil Uji Tes Rekomendasi
+      Model Collaborative Filtering berhasil menghasilkan 10 rekomendasi film teratas untuk Pengguna ID 525, dengan prediksi rating berkisar antara 3.81 hingga 3.99. Perbandingan dengan film-film yang sebelumnya diberi rating tinggi (4.5) oleh Pengguna 525, seperti Planet Earth (Dokumenter), Mad Max: Fury Road (Action|Adventure|Sci-Fi|Thriller), Kingsman: The Secret Service (Action|Adventure|Comedy|Crime), Robin Hood: Men in Tights (Komedi), dan True Lies (Action|Adventure|Comedy|Romance|Thriller), menunjukkan bahwa rekomendasi CF mencakup beragam genre. Contohnya termasuk Crime|Drama (Godfather, The), Adventure|Drama|War (Bridge on the River Kwai), Drama|Western (High Noon), Fantasy|Sci-Fi (Brazil), dan Comedy|Crime|Thriller (Snatch). Keberagaman genre ini mengindikasikan bahwa model CF mampu merekomendasikan film berdasarkan pola preferensi dari pengguna lain yang serupa, tidak hanya terpaku pada genre yang sama persis. Hal ini memungkinkan sistem untuk menawarkan discovery film yang lebih luas dan beragam di luar kebiasaan genre pengguna
 
 ## Evaluation
 Dalam proyek ini, evaluasi dilakukan untuk kedua pendekatan: Collaborative Filtering (CF) dan Content-Based Filtering (CBF), menggunakan metrik dan metode yang sesuai dengan karakteristik masing-masing model.
@@ -361,8 +395,10 @@ Evaluasi untuk model Content-Based Filtering berfokus pada relevansi kualitatif 
     Nilai berkisar antara 0 (tidak mirip) hingga 1 (sangat mirip). Semakin tinggi nilai kemiripan, semakin relevan rekomendasinya secara konten.
 
 - **Hasil Metrik Evaluasi**
-    ![alt text](https://github.com/andreaswd31/Sistem-Rekomendasi-Film/blob/main/Uji%20Tes%20Rekomendasi%20Content-Based%20Filtering.png?raw=true)
-    Hasil uji coba menunjukkan bahwa model Content-Based Filtering berhasil merekomendasikan film-film yang memiliki kemiripan konten sangat tinggi, dengan similarity score sebesar 1.00. Semua film yang direkomendasikan memiliki genre Drama|Thriller yang identik dengan film referensi 'Girl with the Dragon Tattoo, The (2011)'. Ini memvalidasi bahwa sistem secara efektif dapat merekomendasikan film berdasarkan atribut konten eksplisit, secara langsung menjawab Problem Statement 3 tentang relevansi rekomendasi berbasis konten.
+
+    ![alt text](https://github.com/andreaswd31/Sistem-Rekomendasi-Film/blob/main/CBF%20Rekom.png?raw=true)
+  
+    Hasil uji coba menunjukkan bahwa model Content-Based Filtering berhasil merekomendasikan film-film yang memiliki kemiripan konten sangat tinggi, dengan similarity score sebesar 1.00. Semua film yang direkomendasikan memiliki genre Drama|Thriller yang identik dengan film referensi 'Girl with the Dragon Tattoo, The (2011)'. Ini memvalidasi bahwa sistem secara efektif dapat merekomendasikan film berdasarkan atribut konten eksplisit, 
 
 ### Evaluasi Collaborative Filtering (CF)
 Evaluasi model Collaborative Filtering berfokus pada akurasi prediksi rating numerik yang dihasilkan oleh model.
@@ -388,46 +424,16 @@ Model Collaborative Filtering dilatih selama 20 epoch, dan kinerja dipantau meng
     - Visualisasi Hasil Pelatihan:
     Plot Loss
 
-    ![alt text](https://github.com/andreaswd31/Sistem-Rekomendasi-Film/blob/main/set11.png?raw=true)
+    ![alt text](https://github.com/andreaswd31/Sistem-Rekomendasi-Film/blob/main/LOS1.png?raw=true)
   
     Plot RMSE
 
-    ![alt text](https://github.com/andreaswd31/Sistem-Rekomendasi-Film/blob/main/sett333.png?raw=true)
+    ![alt text](https://github.com/andreaswd31/Sistem-Rekomendasi-Film/blob/main/RMSE.png?raw=true)
     - Nilai RMSE Akhir:
-    Final Training RMSE: 0.9324
-    Final Validation RMSE: 0.9894
+    Final Training RMSE: 0.9269
+    Final Validation RMSE: 0.9780
     - Analisis Hasil
-    Dari plot dan nilai RMSE akhir, terlihat bahwa model Collaborative Filtering berhasil mengkonvergen selama pelatihan. Training Loss dan Validation Loss menurun tajam pada epoch awal dan kemudian stabil, dengan gap yang minim, menunjukkan bahwa model tidak mengalami overfitting yang signifikan. Nilai Validation RMSE mencapai sekitar 0.9818. Mengingat rentang rating asli (0.5 hingga 5.0), nilai RMSE ini mengindikasikan bahwa rata-rata kesalahan prediksi model adalah sekitar 0.98 poin rating. Akurasi ini menunjukkan model mampu memprediksi rating dengan cukup baik, yang secara langsung menjawab Problem Statement 1 tentang presisi prediksi rating.
-
-* Hasil Proyek Berdasarkan Metrik Evaluasi (Uji Tes Rekomendasi)
-Untuk lebih lanjut mengevaluasi kemampuan model dalam menghasilkan rekomendasi yang dipersonalisasi, uji tes dilakukan dengan memilih Pengguna ID 387 dan menghasilkan 10 rekomendasi film teratas berdasarkan prediksi rating.
-    - Memilih Pengguna Uji 
-    Dipilih satu pengguna dari data validasi (`X_val`) untuk dijadikan subjek uji. Misalnya Pengguna ID Asli: 387 (Encoded ID: 386)
-    - Menampilkan Film yang Sudah Ditonton
-    Ditampilkan daftar film yang sebelumnya sudah diberi rating oleh pengguna tersebut untuk mengetahui preferensi awalnya. Contoh:
-
-    ![alt text](https://github.com/andreaswd31/Sistem-Rekomendasi-Film/blob/main/Screenshot%202025-05-29%20150955.png?raw=true)
-  
-    - Menentukan Film yang Belum Ditonton
-    Dengan menyaring semua film yang tidak terdapat dalam daftar rating pengguna, diperoleh daftar film yang **belum ditonton**. Jumlahnya:  8697
-    - Prediksi Rating untuk Film yang Belum Ditonton
-    Menggunakan model yang telah dilatih, dilakukan prediksi terhadap seluruh film yang belum ditonton oleh pengguna tersebut.
-
-        | movieId | predicted_rating |
-        |---------|------------------|
-        | 1       | 4.196772            |
-        | 3       | 3.552000             |
-        | 6       | 4.384105             |
-        | 50      | 4.333724             |
-        | 101     | 3.952281             |
-
-    - Menampilkan Rekomendasi Teratas
-    Film dengan prediksi rating tertinggi kemudian diurutkan dan ditampilkan sebagai rekomendasi utama.
-    **Top 10 Rekomendasi Film untuk Pengguna 387:**
-      ![alt text](https://github.com/andreaswd31/Sistem-Rekomendasi-Film/blob/main/baru.png?raw=true)
-      
-    - Analisis Hasil Uji Tes Rekomendasi
-    Model Collaborative Filtering berhasil menghasilkan 10 rekomendasi film teratas untuk Pengguna ID 387. Prediksi rating berkisar antara 3.55 hingga 3.33. Beberapa film rekomendasi bahkan menunjukkan prediksi rating sedikit di atas skala 5.0 (misalnya, High noon dengan prediksi 5.91), yang menunjukkan kemampuan model untuk mengekstrapolasi preferensi kuat, meskipun dalam implementasi akhir nilai ini dapat dibatasi ke 5.0 (clipping). Perbandingan dengan film-film yang sebelumnya diberi rating 5.0 oleh Pengguna 387 (seperti High Noon (Drama|Western), Sweet Hereafter (Drama),  menunjukkan bahwa rekomendasi CF mencakup berbagai genre seperti Crime|Drama|Thriller, Adventure|Drama, Drama|War. Ini mengindikasikan bahwa model CF mampu merekomendasikan film berdasarkan pola preferensi pengguna lain yang serupa, tidak hanya terpaku pada genre yang sama persis, sehingga dapat memberikan discovery yang lebih beragam. 
+    Dari plot dan nilai RMSE akhir, terlihat bahwa model Collaborative Filtering berhasil mengkonvergen selama pelatihan. Training Loss dan Validation Loss menurun tajam pada epoch awal dan kemudian stabil, dengan gap yang minim, menunjukkan bahwa model tidak mengalami overfitting yang signifikan.  Baik kurva loss maupun RMSE (untuk Training dan Validation) menunjukkan penurunan yang sangat cepat pada beberapa epoch awal, dan kemudian cenderung stabil pada nilai yang rendah. Ini mengindikasikan bahwa model belajar dengan efisien dan mencapai kinerja yang konsisten setelah beberapa iterasi. Nilai Final Training RMSE mencapai 0.9269 dan Final Validation RMSE mencapai 0.9780. Mengingat rentang rating asli (0.5 hingga 5.0), nilai Validation RMSE ini mengindikasikan bahwa rata-rata kesalahan prediksi model adalah sekitar 0.98 poin rating.
 
 ### Kesimpulan Evaluasi Menjawab Business Understanding
 Evaluasi ini didasarkan pada hasil implementasi kedua pendekatan sistem rekomendasi: Content-Based Filtering (CBF) dan Collaborative Filtering (CF). Diperoleh sejumlah temuan yang merefleksikan keterkaitan langsung antara performa model dengan problem statements serta sejauh mana capaian terhadap tujuan yang telah ditetapkan dalam Business Understanding.
@@ -442,16 +448,14 @@ Model Content-Based Filtering yang diimplementasikan berhasil dengan sangat efek
 - Problem Statement: Bagaimana presisi model dalam memprediksi rating film yang belum ditonton pengguna?
 - Goal: Mengembangkan model ML untuk memprediksi rating numerik secara akurat.
 - Evaluasi 
-Model Collaborative Filtering berbasis Matrix Factorization (RecommenderNet) berhasil menunjukkan presisi yang baik dalam memprediksi rating numerik. Evaluasi menggunakan metrik Root Mean Squared Error (RMSE) pada validation set menunjukkan nilai RMSE sebesar ~0.9818. Mengingat skala rating asli (0.5 hingga 5.0), nilai RMSE ini mengindikasikan bahwa rata-rata kesalahan prediksi model berada pada angka sekitar 0.98 poin rating. Ini merupakan akurasi yang memadai untuk sistem rekomendasi  terkait presisi prediksi rating. Kurva pelatihan model juga menunjukkan konvergensi yang stabil tanpa indikasi overfitting yang signifikan.
+Model Collaborative Filtering berbasis Matrix Factorization (RecommenderNet) berhasil menunjukkan presisi yang baik dalam memprediksi rating numerik. Evaluasi menggunakan metrik Root Mean Squared Error (RMSE) pada validation set menunjukkan nilai RMSE sebesar 0.9780. Mengingat skala rating asli (0.5 hingga 5.0), nilai RMSE ini mengindikasikan bahwa rata-rata kesalahan prediksi model berada pada angka sekitar 0.98 poin rating. Ini merupakan akurasi yang memadai untuk sistem rekomendasi  terkait presisi prediksi rating. Kurva pelatihan model juga menunjukkan konvergensi yang stabil tanpa indikasi overfitting yang signifikan.
 
 3. Kemampuan Sistem dalam Memberikan Rekomendasi Personal
 - Problem Statement: Bagaimana sistem menyajikan daftar rekomendasi yang dipersonalisasi secara efektif?
 - Goal: Menghasilkan daftar Top-N rekomendasi berdasarkan preferensi pengguna.
 - Evaluasi 
-Model Collaborative Filtering yang dilatih terbukti mampu menghasilkan rekomendasi film yang dipersonalisasi secara efektif. Demonstrasi uji coba untuk Pengguna ID 387 menghasilkan 10 rekomendasi film teratas dengan prediksi rating yang konsisten dengan rentang rating asli (misalnya, High Noon dengan prediksi 5.91 dan film-film lain di sekitar 5.0). Ini menunjukkan bahwa rekomendasi Collaborative Filtering mampu mencakup berbagai genre yang mungkin relevan dengan preferensi pengguna yang kompleks, tidak hanya terpaku pada kemiripan konten langsung. Proyek ini sukses tentang kemampuan sistem dalam menyajikan rekomendasi film yang dipersonalisasi berdasarkan pola preferensi historis pengguna.
+Model Collaborative Filtering yang dilatih terbukti mampu menghasilkan rekomendasi film yang dipersonalisasi secara efektif. Demonstrasi uji coba untuk Pengguna ID 525 menghasilkan 10 rekomendasi film teratas dengan prediksi rating yang konsisten dengan rentang rating asli (misalnya, High Noon dengan prediksi 3.93 dan film-film lain di sekitar 3.99). Ini menunjukkan bahwa rekomendasi Collaborative Filtering mampu mencakup berbagai genre yang mungkin relevan dengan preferensi pengguna yang kompleks, tidak hanya terpaku pada kemiripan konten langsung. Proyek ini sukses tentang kemampuan sistem dalam menyajikan rekomendasi film yang dipersonalisasi berdasarkan pola preferensi historis pengguna.
 
-
-**---Ini adalah bagian akhir laporan---**
 ## Daftar Pustaka
 - Althbiti, A., Alshamrani, R., Alghamdi, T., Lee, S., & Ma, X. (2021). Addressing data sparsity in collaborative filtering based recommender systems using clustering and artificial neural network. 2021 IEEE 11th Annual Computing and Communication Workshop and Conference (CCWC), 0218–0227. https://doi.org/10.1109/CCWC51732.2021.9376008
 - Fajriansyah, M., Adikara, P. P., & Widodo, A. W. (2021). Sistem Rekomendasi Film Menggunakan Content Based Filtering (Vol. 5, Issue 6). http://j-ptiik.ub.ac.id
