@@ -365,40 +365,20 @@ Untuk lebih lanjut mengevaluasi kemampuan model dalam menghasilkan rekomendasi y
 Dalam proyek ini, evaluasi dilakukan untuk kedua pendekatan: Collaborative Filtering (CF) dan Content-Based Filtering (CBF), menggunakan metrik dan metode yang sesuai dengan karakteristik masing-masing model.
 
 ### Evaluasi Content-Based Filtering (CBF)
-Evaluasi untuk model Content-Based Filtering berfokus pada relevansi kualitatif rekomendasi yang dihasilkan, karena model ini tidak memprediksi rating numerik secara langsung.
-- Metrix Evaluasi
-    Untuk Content-Based Filtering, evaluasi dilakukan secara kualitatif melalui inspeksi langsung terhadap daftar rekomendasi yang dihasilkan. Ini bertujuan untuk memverifikasi apakah film-film yang direkomendasikan secara intuitif relevan dengan atribut konten (genre) dari film yang menjadi referensi.
-- Formula & Cara Kerja:
-    - TF-IDF (Term Frequency-Inverse Document Frequency): Bobot suatu genre (t) dalam film (d) dari korpus film (D) dihitung sebagai:
-        $$\text{tf-idf}(t,d,D) = \text{tf}(t,d) \times \text{idf}(t,D)$$
-        - **tf(t,d)** = Frekuensi suatu kata **t** dalam dokumen **d**.
-        - **idf(t,D)** = Log dari rasio jumlah total dokumen **D** dengan jumlah dokumen yang mengandung kata **t**.
-        
-        Rumus IDF dihitung sebagai:
-        $$\text{idf}(t,D) = \log\left(\frac{|D|}{|\{d \in D : t \in d\}|}\right)$$
+Untuk mengevaluasi kualitas daftar rekomendasi Top-10 yang dihasilkan oleh Content-Based Filtering, metrik yang tepat adalah Precision@K. Precision@K mengukur proporsi item yang relevan di antara K item teratas yang direkomendasikan oleh sistem, menunjukkan seberapa akurat rekomendasi di posisi teratas.
+- Formula & Cara Kerja Precision@K:
 
-    - Cosine Similarity: Metrik ini mengukur kemiripan antara dua film berdasarkan vektor TF-IDF mereka. Untuk dua vektor film
-    $$\text{sim}(A, B) = \cos(\theta) = \frac{A \cdot B}{\|A\| \times \|B\|}$$
-
-    **Keterangan:**
-    - $$A$$ dan $$B$$: vektor fitur dari dua film yang ingin dibandingkan (misalnya, hasil dari TF-IDF)
-    - $$A$$ $$\cdot$$ $$B$$: hasil dot product antara vektor $A$ dan $B$
-    - $$\|A\|$$: norma (panjang) dari vektor $A$
-    - $$\|B\|$$: norma (panjang) dari vektor $B$
-    - $$\text{sim}(A, B)$$: nilai kemiripan kosinus antara dua film, berada dalam rentang $[-1, 1]$, tapi untuk TF-IDF umumnya bernilai $$[0, 1]$$
-    
-    **Interpretasi:**
-    - Nilai mendekati 1 → Film sangat mirip secara konten
-    - Nilai mendekati 0 → Film tidak mirip
-    - Nilai negatif → Jarang terjadi pada TF-IDF, tapi secara teori berarti sangat tidak mirip
-    
-    Nilai berkisar antara 0 (tidak mirip) hingga 1 (sangat mirip). Semakin tinggi nilai kemiripan, semakin relevan rekomendasinya secara konten.
-
-- **Hasil Metrik Evaluasi**
-
-    ![alt text](https://github.com/andreaswd31/Sistem-Rekomendasi-Film/blob/main/CBF%20Rekom.png?raw=true)
+  Untuk Content-Based Filtering, evaluasi dilakukan secara kualitatif melalui inspeksi langsung terhadap daftar rekomendasi yang dihasilkan. Ini bertujuan untuk     memverifikasi apakah film-film yang direkomendasikan secara intuitif relevan dengan atribut konten (genre) dari film yang menjadi referensi.
   
-    Hasil uji coba menunjukkan bahwa model Content-Based Filtering berhasil merekomendasikan film-film yang memiliki kemiripan konten sangat tinggi, dengan similarity score sebesar 1.00. Semua film yang direkomendasikan memiliki genre Drama|Thriller yang identik dengan film referensi 'Girl with the Dragon Tattoo, The (2011)'. Ini memvalidasi bahwa sistem secara efektif dapat merekomendasikan film berdasarkan atribut konten eksplisit, 
+- Formula & Cara Kerja:
+
+    $$\text{Precision@K} \;=\; \frac{\text{Jumlah item relevan pada } K \text{ rekomendasi teratas}}{K}$$
+
+  Semakin tinggi nilai Precision@K, semakin baik sistem dalam memberikan rekomendasi yang relevan di posisi teratas.
+  
+- Analisis :
+
+    Pengguna ID 414 dipilih  berdasarkan dari film referensi. karena aktivitas ratingnya yang tinggi dan beragam, yang memungkinkan demonstrasi yang jelas mengenai bagaimana rekomendasi Content-Based Filtering dapat dihitung dan divalidasi terhadap preferensi historis pengguna. Film referensi yang digunakan untuk menghasilkan rekomendasi ini Girl with the Dragon Tattoo, The (2011) adalah salah satu film yang memang disukai oleh Pengguna ID 414 (rating ≥3.5), Jumlah item relevan yang ditemukan dalam rekomendasi adalah 4, sehingga Precision@10 : 0.40
 
 ### Evaluasi Collaborative Filtering (CF)
 Evaluasi model Collaborative Filtering berfokus pada akurasi prediksi rating numerik yang dihasilkan oleh model.
@@ -442,7 +422,7 @@ Evaluasi ini didasarkan pada hasil implementasi kedua pendekatan sistem rekomend
 - Problem Statement: Bagaimana sistem dapat merekomendasikan film berdasarkan atribut eksplisit seperti genre?
 - Goal: Mengembangkan sistem rekomendasi berbasis kemiripan konten film.
 - Evaluasi: 
-Model Content-Based Filtering yang diimplementasikan berhasil dengan sangat efektif. Melalui penggunaan TF-IDF Vectorizer pada fitur genre film dan penghitungan Cosine Similarity, sistem dapat secara akurat mengidentifikasi film-film yang memiliki kemiripan konten yang tinggi. Hal ini terbukti dari hasil uji coba rekomendasi untuk film 'Girl with the Dragon Tattoo, The (2011)', di mana semua 10 film yang direkomendasikan memiliki genre Drama|Thriller yang identik dengan film referensi dan menunjukkan similarity score sebesar 1.00. Ini secara langsung memvalidasi kemampuan sistem untuk menghasilkan rekomendasi yang relevan dan dapat dijelaskan berdasarkan preferensi konten eksplisit pengguna.
+Model Content-Based Filtering yang diimplementasikan berhasil dengan sangat efektif. Melalui penggunaan TF-IDF Vectorizer pada fitur genre film dan penghitungan Cosine Similarity, sistem dapat secara akurat mengidentifikasi film-film yang memiliki kemiripan konten yang tinggi. Hal ini terbukti dari hasil uji coba rekomendasi untuk film 'Girl with the Dragon Tattoo, The (2011)', di mana semua 10 film yang direkomendasikan memiliki genre Drama|Thriller yang identik dengan film referensi dan menunjukkan similarity score sebesar 1.00. Ini secara langsung memvalidasi kemampuan sistem untuk menghasilkan rekomendasi yang relevan dan dapat dijelaskan berdasarkan preferensi konten eksplisit pengguna. Meskipun kemiripan konten sangat kuat, dari segi kesesuaian dengan histori preferensi pengguna (berdasarkan data rating), hanya 40% dari rekomendasi yang benar-benar sesuai. Oleh karena itu, Precision@10 = 0.40 menjadi indikator bahwa sistem masih bisa ditingkatkan
 
 2. Presisi Prediksi Rating Menggunakan Collaborative Filtering
 - Problem Statement: Bagaimana presisi model dalam memprediksi rating film yang belum ditonton pengguna?
